@@ -1,0 +1,16 @@
+terraform {
+  required_version = ">= 1.10.0"
+
+  required_providers {
+    aws    = { source = "hashicorp/aws", version = "~> 5.60" }
+    random = { source = "hashicorp/random", version = "~> 3.6" }
+  }
+
+  backend "s3" {
+    bucket       = "qa-liquor-pilot-terraform-state-670880417033-us-east-1-an"
+    key          = "qa/terraform.tfstate"
+    region       = "us-east-1"
+    use_lockfile = true # native S3 state locking (no DynamoDB needed)
+    encrypt      = true
+  }
+}

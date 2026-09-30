@@ -1,0 +1,15 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+# Never commit real variable values / secrets
+*.tfvars
+*.auto.tfvars
+override.tf
+override.tf.json
+*_override.tf
+# Keep the provider lock file
+!.terraform.lock.hcl
+.DS_Store
