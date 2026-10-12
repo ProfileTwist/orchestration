@@ -30,10 +30,11 @@ resource "aws_secretsmanager_secret" "shopify_client_id" {
   tags = local.tags
 }
 resource "aws_secretsmanager_secret_version" "shopify_client_id" {
-  secret_id     = aws_secretsmanager_secret.shopify_client_id.id
-  secret_string = var.shopify_client_id
-  # Value is set on first apply; afterwards manage it in Secrets Manager directly
-  # so later applies (without the TF_VAR) don't blank it.
+  secret_id = aws_secretsmanager_secret.shopify_client_id.id
+  # Secrets Manager rejects an empty value, so fall back to a placeholder that
+  # you overwrite in Secrets Manager (or via TF_VAR on first apply).
+  secret_string = var.shopify_client_id != "" ? var.shopify_client_id : "REPLACE_ME"
+  # Value is managed in Secrets Manager afterwards; later applies won't clobber it.
   lifecycle { ignore_changes = [secret_string] }
 }
 
@@ -43,6 +44,6 @@ resource "aws_secretsmanager_secret" "shopify_client_secret" {
 }
 resource "aws_secretsmanager_secret_version" "shopify_client_secret" {
   secret_id     = aws_secretsmanager_secret.shopify_client_secret.id
-  secret_string = var.shopify_client_secret
+  secret_string = var.shopify_client_secret != "" ? var.shopify_client_secret : "REPLACE_ME"
   lifecycle { ignore_changes = [secret_string] }
 }

@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket       = "liquorpilot-consolidator-tfstate"
+    bucket       = "prod-liquor-pilot-terraform-state-670880417033-us-east-1"
     key          = "prod/terraform.tfstate"
     region       = "us-east-1"
     use_lockfile = true # native S3 state locking (no DynamoDB needed)
